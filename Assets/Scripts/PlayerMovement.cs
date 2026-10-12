@@ -19,4 +19,12 @@ public class PlayerMovement : MonoBehaviour
 
         rb.MovePosition(rb.position + movement * speed * Time.fixedDeltaTime);
     }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Coletavel"))
+        {
+            Destroy(other.gameObject);
+        }
+    }
 }
