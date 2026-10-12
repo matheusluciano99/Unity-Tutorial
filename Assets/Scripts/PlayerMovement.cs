@@ -22,12 +22,13 @@ public class PlayerMovement : MonoBehaviour
         rb.MovePosition(rb.position + movement * speed * Time.fixedDeltaTime);
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    // Detecta colisão com objetos coletáveis
+    void OnTriggerEnter2D(Collider2D other) 
     {
-        if (other.CompareTag("Coletavel"))
+        if (other.CompareTag("Coletavel")) // Verifica se o objeto colidido tem a tag "Coletavel"
         {
-            audioSource.Play();
-            Destroy(other.gameObject);
+            audioSource.Play(); // Toca o som de coleta
+            Destroy(other.gameObject); // Destroi o objeto coletável
         }
     }
 }
