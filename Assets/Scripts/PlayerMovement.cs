@@ -30,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
         {
             audioSource.Play(); // Toca o som de coleta
             Destroy(other.gameObject); // Destroi o objeto coletável
+            GameManager.instance.Coletou(); // Avisa o GameManager
         }
     }
 }
