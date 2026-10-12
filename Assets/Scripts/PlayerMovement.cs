@@ -5,10 +5,12 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 5f;
 
     private Rigidbody2D rb;
+    private AudioSource audioSource;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void FixedUpdate()
@@ -24,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (other.CompareTag("Coletavel"))
         {
+            audioSource.Play();
             Destroy(other.gameObject);
         }
     }
