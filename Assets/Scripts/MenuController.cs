@@ -5,6 +5,6 @@ public class MenuController : MonoBehaviour
 {
     public void Jogar()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("Fase1");
     }
 }
