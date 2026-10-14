@@ -6285,8 +6285,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "Mouse: arraste a partir de um ponto para criar viga \xB7 bot\xE3o direito
-    apaga \xB7 Espa\xE7o testa/volta \xB7 \u2190 \u2192 dirigem\nControle: anal\xF3gico
-    move o cursor e dirige \xB7 A constr\xF3i \xB7 X apaga \xB7 Y testa/volta"
+    apaga \xB7 Espa\xE7o testa/volta \xB7 setas dirigem\nControle: anal\xF3gico move
+    o cursor e dirige \xB7 A constr\xF3i \xB7 X apaga \xB7 Y testa/volta"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

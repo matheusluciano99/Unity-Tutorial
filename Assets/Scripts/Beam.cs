@@ -42,7 +42,8 @@ public class Beam : MonoBehaviour
         Vector2 direcao = pb - pa;
 
         transform.position = (pa + pb) / 2f;
-        transform.right = direcao;
+        // transform.right gira em Y quando a direção aponta para a esquerda, o que inverte a viga na física 2D.
+        transform.rotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(direcao.y, direcao.x) * Mathf.Rad2Deg);
         transform.localScale = new Vector3(direcao.magnitude, 0.2f, 1f);
         visual.color = corNormal;
 
