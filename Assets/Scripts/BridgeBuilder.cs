@@ -7,13 +7,22 @@ public class BridgeBuilder : MonoBehaviour
     public Beam prefabViga;
     public Transform grupoPonte;
     public LineRenderer previa;
+    public Transform cursor;
+    public AudioClip somViga;
     public float tamanhoMaximo = 2f;
     public float grade = 0.5f;
+    public int orcamento = 1000;
+    public int custoPorUnidade = 100;
+    public float velocidadeCursor = 6f;
+
+    public bool construindo = true;
+    public int gasto;
 
     private List<Node> pontos = new List<Node>();
     private List<Beam> vigas = new List<Beam>();
+    private List<Vector3> posicoesSalvas = new List<Vector3>();
     private Node inicio;
-    private bool testando;
+    private Vector2 posCursor;
 
     void Start()
     {
@@ -23,43 +32,60 @@ public class BridgeBuilder : MonoBehaviour
 
     void Update()
     {
-        if (testando) return;
+        cursor.gameObject.SetActive(construindo);
+        if (!construindo) return;
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Testar();
-            return;
-        }
+        MoverCursor();
+        Vector2 alvo = Arredondar(posCursor);
 
-        Vector2 mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            inicio = PontoPerto(mouse);
-        }
-
+        if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.JoystickButton2)) ApagarViga(posCursor);
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.JoystickButton0)) inicio = PontoPerto(alvo);
         if (inicio == null) return;
 
-        Vector2 fim = PontoFinal(mouse);
+        Vector2 fim = PontoFinal(posCursor);
+        bool cabe = gasto + Custo(Vector2.Distance(inicio.transform.position, fim)) <= orcamento;
         previa.enabled = true;
+        previa.startColor = previa.endColor = cabe ? new Color(1f, 1f, 1f, 0.6f) : new Color(1f, 0.2f, 0.2f, 0.6f);
         previa.SetPosition(0, inicio.transform.position);
         previa.SetPosition(1, fim);
 
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0) || Input.GetKeyUp(KeyCode.JoystickButton0))
         {
-            CriarViga(inicio, fim);
+            if (cabe) CriarViga(inicio, fim);
             inicio = null;
             previa.enabled = false;
         }
     }
 
+    // O mouse manda quando se mexe; senão, o analógico/setas empurram o cursor.
+    void MoverCursor()
+    {
+        if (Input.GetAxis("Mouse X") != 0f || Input.GetAxis("Mouse Y") != 0f)
+        {
+            posCursor = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        }
+        else
+        {
+            Vector2 eixo = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+            posCursor += eixo * velocidadeCursor * Time.deltaTime;
+        }
+        cursor.position = Arredondar(posCursor);
+    }
+
+    Vector2 Arredondar(Vector2 p)
+    {
+        return new Vector2(Mathf.Round(p.x / grade) * grade, Mathf.Round(p.y / grade) * grade);
+    }
+
     Vector2 PontoFinal(Vector2 mouse)
     {
         Vector2 origem = inicio.transform.position;
-        Vector2 alvo = origem + Vector2.ClampMagnitude(mouse - origem, tamanhoMaximo);
-        alvo.x = Mathf.Round(alvo.x / grade) * grade;
-        alvo.y = Mathf.Round(alvo.y / grade) * grade;
-        return alvo;
+        return Arredondar(origem + Vector2.ClampMagnitude(mouse - origem, tamanhoMaximo));
+    }
+
+    int Custo(float comprimento)
+    {
+        return Mathf.CeilToInt(comprimento * custoPorUnidade);
     }
 
     Node PontoPerto(Vector2 posicao)
@@ -94,20 +120,73 @@ public class BridgeBuilder : MonoBehaviour
         Beam viga = Instantiate(prefabViga, grupoPonte);
         viga.Conectar(a, b);
         vigas.Add(viga);
+        gasto += Custo(viga.transform.localScale.x);
+        GameManager.instance.Tocar(somViga);
     }
 
-    void Testar()
+    void ApagarViga(Vector2 posicao)
     {
-        testando = true;
+        Collider2D toque = Physics2D.OverlapPoint(posicao, LayerMask.GetMask("Ponte"));
+        if (toque == null) return;
+
+        Beam viga = toque.GetComponent<Beam>();
+        vigas.Remove(viga);
+        gasto -= Custo(viga.transform.localScale.x);
+        Destroy(viga.gameObject);
+        ApagarSeSolto(viga.a);
+        ApagarSeSolto(viga.b);
+    }
+
+    void ApagarSeSolto(Node p)
+    {
+        if (p.ancora) return;
+        foreach (Beam v in vigas)
+        {
+            if (v.a == p || v.b == p) return;
+        }
+        pontos.Remove(p);
+        Destroy(p.gameObject);
+    }
+
+    public void Testar()
+    {
+        construindo = false;
+        inicio = null;
         previa.enabled = false;
 
+        posicoesSalvas.Clear();
         foreach (Node p in pontos)
         {
+            posicoesSalvas.Add(p.transform.position);
             if (!p.ancora) p.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         }
         foreach (Beam v in vigas)
         {
             v.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         }
+    }
+
+    // Devolve cada ponto à posição de antes do teste e remonta as vigas (inclusive as quebradas).
+    public void Reconstruir()
+    {
+        for (int i = 0; i < pontos.Count; i++)
+        {
+            Parar(pontos[i].GetComponent<Rigidbody2D>());
+            pontos[i].transform.SetPositionAndRotation(posicoesSalvas[i], Quaternion.identity);
+        }
+        foreach (Beam v in vigas)
+        {
+            Parar(v.GetComponent<Rigidbody2D>());
+            v.Conectar(v.a, v.b);
+        }
+        construindo = true;
+    }
+
+    void Parar(Rigidbody2D rb)
+    {
+        if (rb.bodyType == RigidbodyType2D.Static) return;
+        rb.bodyType = RigidbodyType2D.Kinematic;
+        rb.linearVelocity = Vector2.zero;
+        rb.angularVelocity = 0f;
     }
 }

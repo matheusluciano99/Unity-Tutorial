@@ -87,7 +87,7 @@ SpriteRenderer:
   m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.55, g: 0.55, b: 0.6, a: 1}
+  m_Color: {r: 0.78, g: 0.58, b: 0.34, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -182,7 +182,7 @@ HingeJoint2D:
   m_ConnectedRigidBody: {fileID: 0}
   m_BreakForce: 400
   m_BreakTorque: Infinity
-  m_BreakAction: 3
+  m_BreakAction: 2
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 2.05957, y: 0.22279}
@@ -208,7 +208,7 @@ HingeJoint2D:
   m_ConnectedRigidBody: {fileID: 0}
   m_BreakForce: 400
   m_BreakTorque: Infinity
-  m_BreakAction: 3
+  m_BreakAction: 2
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 2.05957, y: 0.22279}
@@ -235,3 +235,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Beam
   a: {fileID: 0}
   b: {fileID: 0}
+  somQuebra: {fileID: 8300000, guid: 4eb84109283e6b44280593b8f181c1e9, type: 3}
