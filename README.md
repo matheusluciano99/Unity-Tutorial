@@ -24,4 +24,4 @@ Construa uma ponte entre os penhascos e leve o carro até a bandeira antes que o
 ## Fases
 
 1. **O Vão** — vão de 8 unidades, orçamento de $3100.
-2. **O Pilar** — vão de 10 unidades com um pilar no meio, orçamento de $1600.
+2. **O Pilar** — vão de 10 unidades com um pilar no meio, orçamento de $2300.
