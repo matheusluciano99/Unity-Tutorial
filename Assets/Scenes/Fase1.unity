@@ -2229,7 +2229,7 @@ MonoBehaviour:
   somViga: {fileID: 8300000, guid: dc6afde25b8f92343b3877a2b615a4a8, type: 3}
   tamanhoMaximo: 2
   grade: 0.5
-  orcamento: 2500
+  orcamento: 3100
   custoPorUnidade: 100
   velocidadeCursor: 6
   construindo: 1
@@ -5623,7 +5623,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Or\xE7amento: $2500"
+  m_text: "Or\xE7amento: $3100"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
