@@ -7,14 +7,13 @@ Demo de um jogo de construção de pontes feito em Unity para o Projeto Introdu�
 
 ## Como jogar
 
-Construa uma ponte entre os penhascos e leve o carro até a bandeira antes que o tempo acabe.
+Construa uma ponte entre os penhascos. Ao testar, o carro anda sozinho até a bandeira; ele precisa chegar antes que o tempo acabe.
 
 | Ação | Teclado e mouse | Controle Xbox |
 |---|---|---|
 | Criar viga | Arrastar a partir de um ponto | Analógico move o cursor, segurar **A** e soltar |
 | Apagar viga | Botão direito | **X** |
 | Testar / voltar a construir | **Espaço** ou botão "Testar" | **Y** ou **Start** |
-| Dirigir o carro | **← →** ou **A D** | Analógico esquerdo |
 
 - Cada viga custa conforme o tamanho e o orçamento da fase é limitado.
 - Durante o teste as vigas ficam vermelhas quando estão perto de quebrar.

@@ -8,7 +8,6 @@ public class Carro : MonoBehaviour
     private Rigidbody2D[] corpos;
     private Vector3[] posicoes;
     private Quaternion[] rotacoes;
-    private bool dirigindo;
 
     void Awake()
     {
@@ -23,30 +22,23 @@ public class Carro : MonoBehaviour
         Voltar();
     }
 
-    void Update()
+    // Liga a física e acelera para a frente até o fim do teste.
+    public void Ligar()
     {
-        if (!dirigindo) return;
+        foreach (Rigidbody2D rb in corpos) rb.simulated = true;
 
         // Velocidade negativa no motor gira a roda no sentido horário, levando o carro para a direita.
-        float eixo = Input.GetAxis("Horizontal");
         foreach (WheelJoint2D roda in rodas)
         {
             JointMotor2D motor = roda.motor;
-            motor.motorSpeed = -eixo * velocidade;
+            motor.motorSpeed = -velocidade;
             roda.motor = motor;
         }
-    }
-
-    public void Ligar()
-    {
-        dirigindo = true;
-        foreach (Rigidbody2D rb in corpos) rb.simulated = true;
     }
 
     // Congela o carro e devolve ele para a largada.
     public void Voltar()
     {
-        dirigindo = false;
         for (int i = 0; i < corpos.Length; i++)
         {
             corpos[i].simulated = false;
