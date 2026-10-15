@@ -13,7 +13,6 @@ public class BridgeBuilder : MonoBehaviour
     public float grade = 0.5f;
     public int orcamento = 1000;
     public int custoPorUnidade = 100;
-    public float velocidadeCursor = 6f;
 
     public bool construindo = true;
     public int gasto;
@@ -38,8 +37,8 @@ public class BridgeBuilder : MonoBehaviour
         MoverCursor();
         Vector2 alvo = Arredondar(posCursor);
 
-        if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.JoystickButton2)) ApagarViga(posCursor);
-        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.JoystickButton0)) inicio = PontoPerto(alvo);
+        if (Input.GetMouseButtonDown(1)) ApagarViga(posCursor);
+        if (Input.GetMouseButtonDown(0)) inicio = PontoPerto(alvo);
         if (inicio == null) return;
 
         Vector2 fim = PontoFinal(posCursor);
@@ -49,7 +48,7 @@ public class BridgeBuilder : MonoBehaviour
         previa.SetPosition(0, inicio.transform.position);
         previa.SetPosition(1, fim);
 
-        if (Input.GetMouseButtonUp(0) || Input.GetKeyUp(KeyCode.JoystickButton0))
+        if (Input.GetMouseButtonUp(0))
         {
             if (cabe) CriarViga(inicio, fim);
             inicio = null;
@@ -57,18 +56,9 @@ public class BridgeBuilder : MonoBehaviour
         }
     }
 
-    // O mouse manda quando se mexe; senão, o analógico/setas empurram o cursor.
     void MoverCursor()
     {
-        if (Input.GetAxis("Mouse X") != 0f || Input.GetAxis("Mouse Y") != 0f)
-        {
-            posCursor = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        }
-        else
-        {
-            Vector2 eixo = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-            posCursor += eixo * velocidadeCursor * Time.deltaTime;
-        }
+        posCursor = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         cursor.position = Arredondar(posCursor);
     }
 

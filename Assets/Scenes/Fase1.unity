@@ -2231,7 +2231,6 @@ MonoBehaviour:
   grade: 0.5
   orcamento: 3100
   custoPorUnidade: 100
-  velocidadeCursor: 6
   construindo: 1
   gasto: 0
 --- !u!120 &589679243
@@ -6284,9 +6283,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Mouse: arraste a partir de um ponto para criar viga \xB7 bot\xE3o direito
-    apaga \xB7 Espa\xE7o testa/volta\nControle: anal\xF3gico move o cursor \xB7 A
-    constr\xF3i \xB7 X apaga \xB7 Y testa/volta"
+  m_text: "Arraste a partir de um ponto para criar viga \xB7 bot\xE3o direito apaga
+    \xB7 Espa\xE7o testa/volta"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
