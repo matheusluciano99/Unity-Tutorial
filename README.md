@@ -2,7 +2,7 @@
 
 Demo de um jogo de construção de pontes feito em Unity para o Projeto Introdução ao Unity (Insper, Jogos Digitais 2026).
 
-**Autor:** [SEU NOME COMPLETO]
+**Autor:** Matheus Luciano Alves de Oliveira Silva
 **Jogar no navegador:** https://matheusluciano99.itch.io/bridge-build
 
 ## Como jogar
